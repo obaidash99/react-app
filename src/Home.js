@@ -34,7 +34,7 @@ const Home = () => {
 			{/* <hr />
 			<hr /> */}
 
-			<BlogList />
+			<BlogList blogs={blogs} title="All Blogs!" />
 		</div>
 	);
 };

@@ -5,12 +5,17 @@ const Home = () => {
 	// let name = 'Obaida';
 	// const [name, setName] = useState('Obaida');
 	// const [age, setAge] = useState(23);
-	const [blogs] = useState([
-		{ title: 'My new website', body: 'Lorem ipsum...', author: 'obaida', id: 1 },
-		{ title: 'My new website', body: 'Lorem ipsum...', author: 'omar', id: 2 },
-		{ title: 'My new website', body: 'Lorem ipsum...', author: 'obay', id: 3 },
-		{ title: 'My new website', body: 'Lorem ipsum...', author: 'owais', id: 4 },
+	const [blogs, setBlogs] = useState([
+		{ title: 'My new website', body: 'Lorem ipsum...', author: 'mario', id: 1 },
+		{ title: 'My new website', body: 'Lorem ipsum...', author: 'ahmed', id: 2 },
+		{ title: 'My new website', body: 'Lorem ipsum...', author: 'hany', id: 3 },
+		{ title: 'My new website', body: 'Lorem ipsum...', author: 'mario', id: 4 },
 	]);
+
+	const handleDelete = (id) => {
+		const newBlogs = blogs.filter((blog) => blog.id !== id);
+		setBlogs(newBlogs);
+	};
 
 	// const handleClick = () => {
 	// 	setName('Omar');
@@ -34,7 +39,15 @@ const Home = () => {
 			{/* <hr />
 			<hr /> */}
 
-			<BlogList blogs={blogs} title="All Blogs!" />
+			<BlogList blogs={blogs} title="All Blogs!" handleDelete={handleDelete} />
+
+			<hr />
+
+			<BlogList
+				blogs={blogs.filter((blog) => blog.author === 'mario')}
+				title="Mario's Blogs"
+				handleDelete={handleDelete}
+			/>
 		</div>
 	);
 };

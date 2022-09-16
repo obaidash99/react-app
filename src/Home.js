@@ -12,6 +12,8 @@ const Home = () => {
 		{ title: 'My new website', body: 'Lorem ipsum...', author: 'mario', id: 4 },
 	]);
 
+	const [name, setName] = useState('mario');
+
 	const handleDelete = (id) => {
 		const newBlogs = blogs.filter((blog) => blog.id !== id);
 		setBlogs(newBlogs);
@@ -29,8 +31,8 @@ const Home = () => {
 	useEffect(() => {
 		// fires on every render
 		console.log('useEffect ran');
-		console.log(blogs);
-	});
+		console.log(name);
+	}, [name]); // [] => to make it render once on first render and [name] => to make render when name is changed
 
 	return (
 		<div className="home">
@@ -46,7 +48,8 @@ const Home = () => {
 			<hr /> */}
 
 			<BlogList blogs={blogs} title="All Blogs!" handleDelete={handleDelete} />
-
+			<button onClick={() => setName('luigi')}>Change Name</button>
+			<p>{name}</p>
 			<hr />
 
 			<BlogList

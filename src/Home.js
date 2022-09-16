@@ -1,14 +1,13 @@
 import { useState, useEffect } from 'react';
 import BlogList from './blogList';
+import useFetch from './useFetch';
 
 const Home = () => {
+	const { data: blogs, isLoading, error } = useFetch('http://localhost:8000/blogs');
+
 	// let name = 'Obaida';
 	// const [name, setName] = useState('Obaida');
 	// const [age, setAge] = useState(23);
-	const [blogs, setBlogs] = useState(null);
-
-	const [isLoading, setIsLoadaing] = useState(true);
-	const [error, setError] = useState(null);
 
 	// const [name, setName] = useState('mario');
 
@@ -26,28 +25,6 @@ const Home = () => {
 	// 	console.log('useEffect ran');
 	// 	console.log(name);
 	// }, [name]); // [] => to make it render once on first render and [name] => to make render when name is changed
-
-	useEffect(() => {
-		setTimeout(() => {
-			fetch('http://localhost:8000/blogs')
-				.then((response) => {
-					console.log(response);
-					if (!response.ok) {
-						throw Error('could not fetch the data from that resource');
-					}
-					return response.json();
-				})
-				.then((data) => {
-					setBlogs(data);
-					setIsLoadaing(false);
-					setError(null);
-				})
-				.catch((err) => {
-					setIsLoadaing(false);
-					setError(err.message);
-				});
-		}, 1000);
-	}, []);
 
 	return (
 		<div className="home">

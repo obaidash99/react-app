@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import BlogList from './blogList';
 
 const Home = () => {
@@ -25,6 +25,12 @@ const Home = () => {
 	// const handleClickAgain = (name, e) => {
 	// 	console.log('Hello ' + name, e.target);
 	// };
+
+	useEffect(() => {
+		// fires on every render
+		console.log('useEffect ran');
+		console.log(blogs);
+	});
 
 	return (
 		<div className="home">

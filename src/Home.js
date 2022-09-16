@@ -5,19 +5,10 @@ const Home = () => {
 	// let name = 'Obaida';
 	// const [name, setName] = useState('Obaida');
 	// const [age, setAge] = useState(23);
-	const [blogs, setBlogs] = useState([
-		{ title: 'My new website', body: 'Lorem ipsum...', author: 'mario', id: 1 },
-		{ title: 'My new website', body: 'Lorem ipsum...', author: 'ahmed', id: 2 },
-		{ title: 'My new website', body: 'Lorem ipsum...', author: 'hany', id: 3 },
-		{ title: 'My new website', body: 'Lorem ipsum...', author: 'mario', id: 4 },
-	]);
+	const [blogs, setBlogs] = useState(null);
 
-	const [name, setName] = useState('mario');
+	// const [name, setName] = useState('mario');
 
-	const handleDelete = (id) => {
-		const newBlogs = blogs.filter((blog) => blog.id !== id);
-		setBlogs(newBlogs);
-	};
 
 	// const handleClick = () => {
 	// 	setName('Omar');
@@ -28,11 +19,21 @@ const Home = () => {
 	// 	console.log('Hello ' + name, e.target);
 	// };
 
+	// useEffect(() => {
+	// 	// fires on every render
+	// 	console.log('useEffect ran');
+	// 	console.log(name);
+	// }, [name]); // [] => to make it render once on first render and [name] => to make render when name is changed
+
 	useEffect(() => {
-		// fires on every render
-		console.log('useEffect ran');
-		console.log(name);
-	}, [name]); // [] => to make it render once on first render and [name] => to make render when name is changed
+		fetch('http://localhost:8000/blogs')
+			.then((response) => {
+				return response.json();
+			})
+			.then((data) => {
+				setBlogs(data);
+			});
+	}, []);
 
 	return (
 		<div className="home">
@@ -47,16 +48,17 @@ const Home = () => {
 			{/* <hr />
 			<hr /> */}
 
-			<BlogList blogs={blogs} title="All Blogs!" handleDelete={handleDelete} />
-			<button onClick={() => setName('luigi')}>Change Name</button>
-			<p>{name}</p>
+			{blogs && <BlogList blogs={blogs} title="All Blogs!"/>}
+			{/* waits for blogs to be true or has value of not null */}
+			{/* <button onClick={() => setName('luigi')}>Change Name</button>
+			<p>{name}</p> */}
 			<hr />
 
-			<BlogList
+			{/* <BlogList
 				blogs={blogs.filter((blog) => blog.author === 'mario')}
 				title="Mario's Blogs"
 				handleDelete={handleDelete}
-			/>
+			/> */}
 		</div>
 	);
 };

@@ -7,8 +7,10 @@ const Home = () => {
 	// const [age, setAge] = useState(23);
 	const [blogs, setBlogs] = useState(null);
 
-	// const [name, setName] = useState('mario');
+	const [isLoading, setIsLoadaing] = useState(true);
+	const [error, setError] = useState(null);
 
+	// const [name, setName] = useState('mario');
 
 	// const handleClick = () => {
 	// 	setName('Omar');
@@ -26,13 +28,25 @@ const Home = () => {
 	// }, [name]); // [] => to make it render once on first render and [name] => to make render when name is changed
 
 	useEffect(() => {
-		fetch('http://localhost:8000/blogs')
-			.then((response) => {
-				return response.json();
-			})
-			.then((data) => {
-				setBlogs(data);
-			});
+		setTimeout(() => {
+			fetch('http://localhost:8000/blogs')
+				.then((response) => {
+					console.log(response);
+					if (!response.ok) {
+						throw Error('could not fetch the data from that resource');
+					}
+					return response.json();
+				})
+				.then((data) => {
+					setBlogs(data);
+					setIsLoadaing(false);
+					setError(null);
+				})
+				.catch((err) => {
+					setIsLoadaing(false);
+					setError(err.message);
+				});
+		}, 1000);
 	}, []);
 
 	return (
@@ -48,7 +62,10 @@ const Home = () => {
 			{/* <hr />
 			<hr /> */}
 
-			{blogs && <BlogList blogs={blogs} title="All Blogs!"/>}
+			{error && <div>{error}</div>}
+			{isLoading && <div>Loading...</div>}
+
+			{blogs && <BlogList blogs={blogs} title="All Blogs!" />}
 			{/* waits for blogs to be true or has value of not null */}
 			{/* <button onClick={() => setName('luigi')}>Change Name</button>
 			<p>{name}</p> */}

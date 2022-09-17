@@ -2,6 +2,7 @@ import Navbar from './Navbar';
 import Home from './Home';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import Create from './Create';
+import BlogDetails from './BlongDetails';
 
 function App() {
 	// const title = 'Welcome to the new blog';
@@ -27,6 +28,9 @@ function App() {
 						</Router>
 						<Router path="/create">
 							<Create />
+						</Router>
+						<Router path="/blogs/:id">
+							<BlogDetails />
 						</Router>
 					</Switch>
 
